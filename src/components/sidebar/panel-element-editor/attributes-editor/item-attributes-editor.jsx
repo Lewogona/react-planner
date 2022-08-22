@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import FormNumberInput from '../../../style/form-number-input';
 import FormTextInput from '../../../style/form-text-input';
+import PropertyPrice from '../../../../catalog/properties/property-price';
 
 const tableStyle = { width: '100%' };
 const firstTdStyle = { width: '6em' };
@@ -12,6 +13,7 @@ export default function ItemAttributesEditor({element, onUpdate, attributeFormDa
   let renderedX = attributeFormData.has('x') ? attributeFormData.get('x') : element.x;
   let renderedY = attributeFormData.has('y') ? attributeFormData.get('y') : element.y;
   let renderedR = attributeFormData.has('rotation') ? attributeFormData.get('rotation') : element.rotation;
+  let price = attributeFormData.has('price') ? attributeFormData.get('price') : element.price;
 
   return (
     <table style={tableStyle}>
@@ -61,6 +63,18 @@ export default function ItemAttributesEditor({element, onUpdate, attributeFormDa
               style={inputStyle}
               state={state}
               precision={2}
+              {...rest}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style={firstTdStyle}>Price</td>
+          <td>
+            <PropertyPrice
+              value={price}
+              onUpdate={mapped => onUpdate('price', mapped)}
+              configs={{min: 0, max: Infinity, precision: 2}}
+              state={state}
               {...rest}
             />
           </td>

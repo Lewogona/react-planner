@@ -7,18 +7,20 @@ import {
   PropertyToggle,
   PropertyCheckbox,
   PropertyHidden,
-  PropertyReadOnly
+  PropertyReadOnly,
+  PropertyPrice
 } from './properties/export';
 
-import {UNIT_CENTIMETER} from '../constants';
+import {UNIT_CENTIMETER, CURRENCY_EURO} from '../constants';
 
 export default class Catalog {
 
-  constructor(unit = UNIT_CENTIMETER) {
+  constructor(unit = UNIT_CENTIMETER, currency = CURRENCY_EURO) {
     this.elements = {};
     this.categories = {root: {name: 'root', label: '/', elements: [], categories: []}};
     this.propertyTypes = {};
     this.unit = unit;
+    this.currency = currency;
 
     this.registerMultiplePropertyType([
       ['color', PropertyColor, PropertyColor],
@@ -29,7 +31,8 @@ export default class Catalog {
       ['toggle', PropertyToggle, PropertyToggle],
       ['checkbox', PropertyCheckbox, PropertyCheckbox],
       ['hidden', PropertyHidden, PropertyHidden],
-      ['read-only', PropertyReadOnly, PropertyReadOnly]
+      ['read-only', PropertyReadOnly, PropertyReadOnly],
+      ['price', PropertyPrice, PropertyPrice]
     ]);
   }
 

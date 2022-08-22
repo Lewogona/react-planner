@@ -72,7 +72,27 @@ export default class ElementEditor extends Component {
 
     switch (element.prototype) {
       case 'items': {
-        return new Map(element);
+        let price = element.misc.get('price') || 0;
+        let _price = element.misc.get('_price') || 0;
+        let _currency = element.misc.get('_currency') || this.context.catalog.currency;
+
+        let map = new Map(element);
+        map.set('price', new Map({
+          price: MathUtils.toFixedFloat(price, PRECISION),
+          _price: MathUtils.toFixedFloat(_price, PRECISION),
+          _currency
+        }))
+        return new Map({
+          name: element.name,
+          x: element.x,
+          y: element.y,
+          rotation: element.rotation,
+          price: new Map({
+            price: MathUtils.toFixedFloat(price, PRECISION),
+            _price: MathUtils.toFixedFloat(_price, PRECISION),
+            _currency
+          }),
+        });
       }
       case 'lines': {
         let v_a = layer.vertices.get(element.vertices.get(0));
@@ -102,6 +122,10 @@ export default class ElementEditor extends Component {
         let _unitB = element.misc.get('_unitB') || this.context.catalog.unit;
         let _lengthB = convert(endAt).from(this.context.catalog.unit).to(_unitB);
 
+        let price = element.misc.get('price') || 0;
+        let _price = element.misc.get('_price') || 0;
+        let _currency = element.misc.get('_currency') || this.context.catalog.currency;
+
         return new Map({
           offset: element.offset,
           offsetA: new Map({
@@ -113,7 +137,12 @@ export default class ElementEditor extends Component {
             length: MathUtils.toFixedFloat(endAt, PRECISION),
             _length: MathUtils.toFixedFloat(_lengthB, PRECISION),
             _unit: _unitB
-          })
+          }),
+          price: new Map({
+            price: MathUtils.toFixedFloat(price, PRECISION),
+            _price: MathUtils.toFixedFloat(_price, PRECISION),
+            _currency
+          }),
         });
       }
       case 'areas': {

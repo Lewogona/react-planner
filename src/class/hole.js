@@ -368,14 +368,21 @@ class Hole {
 
   static setAttributes(state, layerID, holeID, holesAttributes) {
 
-    let hAttr = holesAttributes.toJS();
-    let {offsetA, offsetB, offset} = hAttr;
+    let hAttr = holesAttributes.toJS(); 
+    let {offsetA, offsetB, offset, price} = hAttr;
 
     delete hAttr['offsetA'];
     delete hAttr['offsetB'];
     delete hAttr['offset'];
+    delete hAttr['price'];
 
-    let misc = new Map({_unitA: offsetA._unit, _unitB: offsetB._unit});
+    let misc = new Map({
+      _unitA: offsetA._unit,
+      _unitB: offsetB._unit,
+      price: price.price,
+      _price: price._price,
+      _currency: price._currency,
+    });
 
     state = state
       .mergeIn(['scene', 'layers', layerID, 'holes', holeID], fromJS(hAttr))

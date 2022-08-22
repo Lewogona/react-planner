@@ -310,3 +310,14 @@ export const KEYBOARD_BUTTON_CODE = {
   ENTER: 13,
   TAB: 9
 };
+
+//CURRENCY
+export const CURRENCY_EURO = '€';
+export const CURRENCY_DOLLAR = '$';
+export const CURRENCY_POUND = '£';
+
+export const CURRENCY = [
+  CURRENCY_EURO,
+  CURRENCY_DOLLAR,
+  CURRENCY_POUND
+];

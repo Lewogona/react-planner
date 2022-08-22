@@ -215,8 +215,22 @@ class Item{
   }
 
   static setAttributes( state, layerID, itemID, itemAttributes) {
-    state = state.mergeIn(['scene', 'layers', layerID, 'items', itemID], itemAttributes);
-    return { updatedState: state };
+    let iAttr = itemAttributes.toJS(); 
+    let {price, ...all} = iAttr;
+
+    delete iAttr['price'];
+
+    let misc = new Map({
+      price: price.price,
+      _price: price._price,
+      _currency: price._currency,
+    });
+
+    state = state
+      .mergeIn(['scene', 'layers', layerID, 'items', itemID], fromJS(iAttr))
+      .mergeDeepIn(['scene', 'layers', layerID, 'items', itemID], new Map({...all, misc}));
+
+    return {updatedState: state};
   }
 
   static setJsAttributes( state, layerID, itemID, itemAttributes) {
